@@ -28,15 +28,18 @@
 
 **接口**
 
-            说明：所有接口参照“接口通用定义”项，具体接口返回值，只设定data项。
+            说明：
+                1. 所有接口参照“接口通用定义”项，具体接口返回值，只设定data项。
+                2. DOMAIN_URL 表示接口主站网址，比如 http://www.baidu.com
+
 
 * 接口通用定义：api_url+token=[token]
-    - url : domain/index.php?c=api&a=[api_string]&token=[token]
+    - url : DOMAIN_URL/index.php?c=api&a=[api_string]&token=[token]
     - method : post/get
     - param : {a:a, b:b, c:c, ...}
     - return : 
             {
-                error   :code,
+                code    :code,
                 msg     :string, 
                 data    : {
                     [list/item] :{},
@@ -44,46 +47,46 @@
                 }
 
 * 检测token
-    - url       : domain/index.php?c=api&a=check_token&token=[token]
-    - url       : domain/api/check_token?token=[token]
+    - url       : DOMAIN_URL/index.php?c=api&a=check_token&token=[token]
+    - url       : DOMAIN_URL/api/check_token?token=[token]
     - method    : get
     - param     : null
-    - return    : {error:0/1, msg:"正确/错误提示"}
+    - return    : {code:0/1, msg:"正确/错误提示"}
 
 * 刷新token
-    - url       : domain/index.php?c=api&a=refresh_token&token=[token]
-    - url       : domain/api/refresh_token?token=[token]
+    - url       : DOMAIN_URL/index.php?c=api&a=refresh_token&token=[token]
+    - url       : DOMAIN_URL/api/refresh_token?token=[token]
     - method    : get
     - param     : null
-    - return    : {error:0/1, msg:"更新token成功/更新token失败", data:{item:'新token[string]'}}
+    - return    : {code:0/1, msg:"更新token成功/更新token失败", data:{item:'新token[string]'}}
 
 * 根据token获取手机号
-    - url       : domain/index.php?c=api&a=get_mobile&token=[token]
-    - url       : domain/api/get_mobile
+    - url       : DOMAIN_URL/index.php?c=api&a=get_mobile&token=[token]
+    - url       : DOMAIN_URL/api/get_mobile
     - method    : get
     - param     : {token:[token]}
-    - return    : data:{item:'手机号[number]'}
+    - return    : {code:0/1, msg:'正确/错误提示', data:{item:'手机号[number]'}
 
 * 获取验证码
-    - url       : domain/index.php?c=api&a=get_vcode
-    - url       : domain/api/account/vcode
+    - url       : DOMAIN_URL/index.php?c=api&a=get_vcode
+    - url       : DOMAIN_URL/api/account/vcode
     - method    : get
     - param     : {mobile:number}
-    - return    : {error:0/1, msg:"正确/错误提示", data:{item:'验证码[string]'}}
+    - return    : {code:0/1, msg:"正确/错误提示", data:{item:'验证码[string]'}}
 
 * 登陆
-    - url       : domain/index.php?c=api&a=login
-    - url       : domain/api/account/login
+    - url       : DOMAIN_URL/index.php?c=api&a=login
+    - url       : DOMAIN_URL/api/account/login
     - method    : post
     - param     : {mobile:num, vcode:string}
     - return    : {code:0/1, msg:'登陆成功/验证码错误或已过期', data:{'token':string}}
 
 * 获取服务类型列表
-    - url       : domain/index.php?c=api&a=get_service
-    - url       : domain/api/service/list
+    - url       : DOMAIN_URL/index.php?c=api&a=get_service
+    - url       : DOMAIN_URL/api/service/list
     - method    : get
     - param     : null
-    - return    : data:{ 
+    - return    : {code:0/1, msg:'正确/错误提示', data:{ 
                         list : { 
                             一级分类id : {
                                 title:'一级分类名称',
@@ -93,11 +96,11 @@
                         }
     
 * 根据服务类型id获取服务人员
-    - url       : domain/index.php?c=api&a=get_worker&serviceid=[serviceid]
-    - url       : domain/api/worker/list/[serviceid]
+    - url       : DOMAIN_URL/index.php?c=api&a=get_worker&serviceid=[serviceid]
+    - url       : DOMAIN_URL/api/worker/list/[serviceid]
     - method    : get
     - param     : null
-    - return    : data:{ 
+    - return    : {code:0/1, msg:'正确/错误提示', data:{ 
                         'price' : '服务价格',
                         'list' : { 
                             id : {
@@ -113,26 +116,33 @@
                         }
 
 * 添加订单
-    - url       : domain/index.php?c=api&a=order_add
-    - url       : domain/api/order/add
+    - url       : DOMAIN_URL/index.php?c=api&a=order_add
+    - url       : DOMAIN_URL/api/order/add
     - method    : post
     - param     : {serviceid:number, workerid:number, contacter:'联系人', address:'地址', ordertime:'服务时间,比如：2015-10-12 15:30:00', remark:'其他需求'}
     - return    : {code:0/1, msg:'成功/失败提示'}
 
+* 获取某个订单
+    - url       : DOMAIN_URL/index.php?c=api&a=order_item
+    - url       : DOMAIN_URL/api/order/item/[orderid]?token=[token]
+    - method    : get
+    - param     : null
+    - return    : {code:0/1, msg:'成功/失败提示'}
+
 * 取消订单
-    - url       : domain/index.php?c=api&a=order_cancel
-    - url       : domain/api/order/cancel?token=[token]
+    - url       : DOMAIN_URL/index.php?c=api&a=order_cancel
+    - url       : DOMAIN_URL/api/order/cancel?token=[token]
     - method    : get
     - param     : null
     - return    : {code:0/1, msg:'成功/失败提示'}
     
 
 * 获取某人订单列表
-    - url       : domain/index.php?c=api&a=order_list&token=[token]
-    - url       : domain/api/order/list?token=[token]
+    - url       : DOMAIN_URL/index.php?c=api&a=order_list&token=[token]
+    - url       : DOMAIN_URL/api/order/list?token=[token]
     - method    : get
     - param     : null
-    - return    : data:{
+    - return    : {code:0/1, msg:'正确/错误提示', data:{ 
                         'list' : {
                             1 : { // 受理中
                                 id : {
@@ -160,16 +170,16 @@
 
 
 * 订单付款
-    - url       : domain/index.php?c=api&a=order_pay&token=[token]
-    - url       : domain/api/order/pay?token=[token]
+    - url       : DOMAIN_URL/index.php?c=api&a=order_pay&token=[token]
+    - url       : DOMAIN_URL/api/order/pay?token=[token]
     - method    : post
     - param     : {orderid:'订单id[int]', money:'付款金额[float]'}
     - return    : {code:0/1, msg:'成功/失败提示'}
 
 
 * 订单评分
-    - url       : domain/index.php?c=api&a=order_comment
-    - url       : domain/api/order/comment?token=[token]
+    - url       : DOMAIN_URL/index.php?c=api&a=order_comment
+    - url       : DOMAIN_URL/api/order/comment?token=[token]
     - method    : post
     - param     : {orderid:'订单id[int]', score:'评分1-5分[int]', comment:'评论内容[string]'}
     - return    : {code:0/1, msg:'成功/失败提示'}
