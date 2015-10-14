@@ -122,7 +122,7 @@
     - param     : {serviceid:number, workerid:number, contacter:'联系人', address:'地址', ordertime:'服务时间,比如：2015-10-12 15:30:00', remark:'其他需求'}
     - return    : {code:0/1, msg:'成功/失败提示'}
 
-* 获取某个订单
+* 获取订单详情
     - url       : DOMAIN_URL/index.php?c=api&a=order_item
     - url       : DOMAIN_URL/api/order/item/[orderid]?token=[token]
     - method    : get
