@@ -131,7 +131,7 @@
 
 * 取消订单
     - url       : DOMAIN_URL/index.php?c=api&a=order_cancel
-    - url       : DOMAIN_URL/api/order/cancel?token=[token]
+    - url       : DOMAIN_URL/api/order/cancel/[orderid]?token=[token]
     - method    : get
     - param     : null
     - return    : {code:0/1, msg:'成功/失败提示'}
@@ -171,15 +171,15 @@
 
 * 订单付款
     - url       : DOMAIN_URL/index.php?c=api&a=order_pay&token=[token]
-    - url       : DOMAIN_URL/api/order/pay?token=[token]
+    - url       : DOMAIN_URL/api/order/pay/[orderid]?token=[token]
     - method    : post
-    - param     : {orderid:'订单id[int]', money:'付款金额[float]'}
+    - param     : {money:'付款金额[float]'}
     - return    : {code:0/1, msg:'成功/失败提示'}
 
 
 * 订单评分
     - url       : DOMAIN_URL/index.php?c=api&a=order_comment
-    - url       : DOMAIN_URL/api/order/comment?token=[token]
+    - url       : DOMAIN_URL/api/order/comment/[orderid]?token=[token]
     - method    : post
-    - param     : {orderid:'订单id[int]', score:'评分1-5分[int]', comment:'评论内容[string]'}
+    - param     : {score:'评分1-5分[int]', comment:'评论内容[string]'}
     - return    : {code:0/1, msg:'成功/失败提示'}
