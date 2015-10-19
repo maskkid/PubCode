@@ -183,3 +183,10 @@
     - method    : post
     - param     : {score:'评分1-5分[int]', comment:'评论内容[string]'}
     - return    : {code:0/1, msg:'成功/失败提示'}
+
+* 公司申请
+    - url       : DOMAIN_URL/index.php?c=api&a=company_add
+    - url       : DOMAIN_URL/api/company/add?token=[token]
+    - method    : post
+    - param     : {contacter:'联系人[string]', comment:'联系电话[string]'}
+    - return    : {code:0/1, msg:'成功/失败提示'}
