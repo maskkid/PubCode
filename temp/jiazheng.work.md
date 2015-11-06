@@ -173,7 +173,7 @@
     - url       : DOMAIN_URL/index.php?c=api&a=order_pay&token=[token]
     - url       : DOMAIN_URL/api/order/pay/[orderid]?token=[token]
     - method    : post
-    - param     : {money:'付款金额[float]'}
+    - param     : {money:'付款金额[float]', paytype:'付款类型[1支付宝;2线下付款]'}
     - return    : {code:0/1, msg:'成功/失败提示'}
 
 
