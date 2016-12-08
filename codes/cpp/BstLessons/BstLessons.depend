@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1480996280 source:/data/code/PubCode/codes/cpp/BstLessons/main.cpp
+	<iostream>
+	<BoostLession1.h>
+
+1480994891 /data/code/PubCode/codes/cpp/BstLessons/include/BoostLession1.h
+
+1481009207 source:/data/code/PubCode/codes/cpp/BstLessons/src/BoostLession1.cpp
+	"BoostLession1.h"
+	<boost/thread/thread.hpp>
+
