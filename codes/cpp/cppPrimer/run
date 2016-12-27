@@ -1,0 +1,4 @@
+#/bin/sh
+
+make main>/dev/null
+./main.bin

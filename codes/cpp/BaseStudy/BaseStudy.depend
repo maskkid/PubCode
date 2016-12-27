@@ -1,0 +1,121 @@
+# depslib dependency file v1.0
+1467804705 source:g:\kuaipan\code\c\basestudy\main.cpp
+	<iostream>
+	<vector>
+	<string>
+	"Utils.h"
+	"Study1.h"
+	"Study2.h"
+	"LessonVector.h"
+	"TplDemo.h"
+
+1467804705 "
+
+1425909685 g:\kuaipan\code\c\basestudy\include\study1.h
+
+1426137986 source:g:\kuaipan\code\c\basestudy\src\study1.cpp
+	<iostream>
+	"Study1.h"
+
+1467804668 
+
+1426138033 g:\kuaipan\code\c\basestudy\include\study2.h
+	"Study1.h"
+
+1426138111 source:g:\kuaipan\code\c\basestudy\src\study2.cpp
+	<iostream>
+	"Study2.h"
+
+1426668634 g:\kuaipan\code\c\basestudy\include\containerstudy.h
+	<vector>
+	<iostream>
+
+1428645624 g:\kuaipan\code\c\basestudy\include\enumstudy.h
+
+1428646482 source:g:\kuaipan\code\c\basestudy\src\enumstudy.cpp
+	<iostream>
+	<typeinfo>
+	<string>
+	"EnumStudy.h"
+
+1428646482 .h"
+
+1428649083 g:\kuaipan\code\c\basestudy\include\structstudy.h
+
+1428649445 source:g:\kuaipan\code\c\basestudy\src\structstudy.cpp
+	<iostream>
+	<typeinfo>
+	"StructStudy.h"
+
+1428649445 dy.h"
+
+1432780323 g:\kuaipan\code\c\basestudy\include\study3.h
+	<string>
+	<vector>
+
+1432883842 g:\kuaipan\code\c\basestudy\include\lessonvector.h
+
+1442501023 source:g:\kuaipan\code\c\basestudy\src\lessonvector.cpp
+	<iostream>
+	<vector>
+	<string>
+	"LessonVector.h"
+
+1442501023 tor.h"
+
+1442501847 g:\kuaipan\code\c\basestudy\include\tpldemo.h
+
+1467804081 g:\kuaipan\code\c\basestudy\include\utils.h
+	<iostream>
+
+1467804668 source:g:\kuaipan\code\c\basestudy\src\utils.cpp
+	"Utils.h"
+
+1481689710 source:/data/code/PubCode/codes/cpp/BaseStudy/main.cpp
+	<iostream>
+	<vector>
+	<string>
+	"Utils.h"
+	"Study1.h"
+	"Study2.h"
+	"LessonVector.h"
+	"TplDemo.h"
+
+1481690251 /data/code/PubCode/codes/cpp/BaseStudy/include/Utils.h
+	<iostream>
+	<string>
+
+1425909685 /data/code/PubCode/codes/cpp/BaseStudy/include/Study1.h
+
+1426138033 /data/code/PubCode/codes/cpp/BaseStudy/include/Study2.h
+	"Study1.h"
+
+1432883842 /data/code/PubCode/codes/cpp/BaseStudy/include/LessonVector.h
+
+1442501847 /data/code/PubCode/codes/cpp/BaseStudy/include/TplDemo.h
+
+1442501023 source:/data/code/PubCode/codes/cpp/BaseStudy/src/LessonVector.cpp
+	<iostream>
+	<vector>
+	<string>
+	"LessonVector.h"
+
+1426137986 source:/data/code/PubCode/codes/cpp/BaseStudy/src/Study1.cpp
+	<iostream>
+	"Study1.h"
+
+1426138111 source:/data/code/PubCode/codes/cpp/BaseStudy/src/Study2.cpp
+	<iostream>
+	"Study2.h"
+
+1481690258 source:/data/code/PubCode/codes/cpp/BaseStudy/src/Utils.cpp
+	"Utils.h"
+
+1481687723 source:/data/code/PubCode/codes/cpp/BaseStudy/src/FstreamDemo.cpp
+	"FstreamDemo.h"
+	<fstream>
+
+1481687487 /data/code/PubCode/codes/cpp/BaseStudy/include/FstreamDemo.h
+	<iostream>
+	<fstream>
+
