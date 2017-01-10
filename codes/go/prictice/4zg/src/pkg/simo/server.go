@@ -27,15 +27,18 @@ func checkError(err error, info string) (res bool) {
 //		通讯通道 messages
 //
 ////////////////////////////////////////////////////////
-func Handler(conn net.Conn, messages chan string) {
+func Handler(conn *net.Conn, messages chan string) {
 
-	fmt.Println("connection is connected from ...", conn.RemoteAddr().String())
+	_conn := *conn
+	fmt.Println("connection is connected from ...", _conn.RemoteAddr().String())
+	Connected(conn)
 
 	buf := make([]byte, 1024)
 	for {
-		lenght, err := conn.Read(buf)
+		lenght, err := _conn.Read(buf)
 		if checkError(err, "Connection") == false {
-			conn.Close()
+			Colsed(conn) // close handler
+			_conn.Close()
 			break
 		}
 		if lenght > 0 {
@@ -47,7 +50,7 @@ func Handler(conn net.Conn, messages chan string) {
 
 		// 解析结果
 		fmt.Println(reciveStr, "=========")
-		parseResult := GetInfo(reciveStr) // pkg::simo.argparser
+		parseResult := GetInfo(conn, messages) // pkg::simo.argparser
 		fmt.Println("parse result:: ", *parseResult)
 	}
 
@@ -104,13 +107,12 @@ func StartServer(port string, conf *map[string]string) {
 	}
 
 	for {
-		fmt.Println("Listening ...")
+		fmt.Println("Server running...")
 		conn, err := l.Accept()
-		checkError(err, "Accept")
-		fmt.Println("Accepting ...")
+		checkError(err, "Accept Error")
+		//fmt.Println("Accepting ...")
 		conns[conn.RemoteAddr().String()] = conn
 		//启动一个新线程
-		go Handler(conn, messages)
-
+		go Handler(&conn, messages)
 	}
 }
