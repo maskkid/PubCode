@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	"./pkg/simo"
+	// local pkg
+	"simo"
 )
 
 // server conf

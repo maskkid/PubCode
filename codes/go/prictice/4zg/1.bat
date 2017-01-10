@@ -1,0 +1,1 @@
+@echo off&title simo cmd&prompt ^>&cmd.exe
