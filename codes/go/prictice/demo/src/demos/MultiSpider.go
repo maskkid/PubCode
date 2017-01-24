@@ -5,15 +5,15 @@ import (
 )
 
 type Fetcher interface {
-        // Fetch 返回 URL 的 body 内容，并且将在这个页面上找到的 URL 放到一个 slice 中。
+	// Fetch 返回 URL 的 body 内容，并且将在这个页面上找到的 URL 放到一个 slice 中。
 	Fetch(url string) (body string, urls []string, err error)
 }
 
 // Crawl 使用 fetcher 从某个 URL 开始递归的爬取页面，直到达到最大深度。
 func Crawl(url string, depth int, fetcher Fetcher) {
-        // TODO: 并行的抓取 URL。
-        // TODO: 不重复抓取页面。
-        // 下面并没有实现上面两种情况：
+	// TODO: 并行的抓取 URL。
+	// TODO: 不重复抓取页面。
+	// 下面并没有实现上面两种情况：
 	if depth <= 0 {
 		return
 	}
@@ -29,13 +29,12 @@ func Crawl(url string, depth int, fetcher Fetcher) {
 	return
 }
 
-
 // fakeFetcher 是返回若干结果的 Fetcher。
 type fakeFetcher map[string]*fakeResult
 
 type fakeResult struct {
 	body string
-	urls     []string
+	urls []string
 }
 
 func (f *fakeFetcher) Fetch(url string) (string, []string, error) {

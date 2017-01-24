@@ -8,7 +8,6 @@ import (
 	"demos"
 )
 
-
 //////////////////////////////////////
 //
 // 帮助
@@ -30,5 +29,10 @@ func helpshow() {
  * @return {[type]} [description]
  */
 func main() {
-	demos.MultiSpider();
+	// demos.MultiSpider()  // multi splider demo
+	// demos.Bom() // ExmpleTest Bom()
+	// demos.Chanint() // ExmpleTest Chanint()
+	// demos.Channel1() //
+	// demos.ChannelCache() // channel cache
+	demos.Stc1Demo()
 }

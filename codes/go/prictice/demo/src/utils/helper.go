@@ -5,5 +5,9 @@ import (
 )
 
 func show() {
-	
+
+}
+
+func Line(s string) {
+	fmt.Println("-------------- ", s, " -------------")
 }
