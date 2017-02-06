@@ -31,8 +31,8 @@ func helpshow() {
 func main() {
 	// demos.MultiSpider()  // multi splider demo
 	// demos.Bom() // ExmpleTest Bom()
-	// demos.Chanint() // ExmpleTest Chanint()
+	demos.Chanint() // ExmpleTest Chanint()
 	// demos.Channel1() //
 	// demos.ChannelCache() // channel cache
-	demos.Stc1Demo()
+	// demos.Stc1Demo()
 }
