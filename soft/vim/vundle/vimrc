@@ -72,7 +72,6 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'kien/ctrlp.vim.git'
 map <C-n> :NERDTree<CR>
 Bundle 'bling/vim-airline'
-Bundle 'szw/vim-ctrlspace'
 " 使用Vundle来管理插件，这个必须要有。
 Bundle 'gmarik/vundle'
 Bundle 'a.vim'
