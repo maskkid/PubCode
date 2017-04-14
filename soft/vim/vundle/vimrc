@@ -65,7 +65,8 @@ Plugin 'gmarik/Vundle.vim'
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 "
-Bundle "scrooloose/syntastic"
+Bundle 'Blackrush/vim-gocode'
+Bundle 'scrooloose/syntastic'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'scrooloose/nerdtree'
 Bundle 'kien/ctrlp.vim.git'
