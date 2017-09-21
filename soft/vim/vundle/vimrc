@@ -65,6 +65,9 @@ Plugin 'gmarik/Vundle.vim'
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 "
+" by simo/ rename tab 
+Bundle 'gcmt/taboo.vim'
+
 Bundle 'Blackrush/vim-gocode'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
