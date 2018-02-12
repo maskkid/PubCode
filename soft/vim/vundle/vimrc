@@ -67,6 +67,7 @@ Plugin 'gmarik/Vundle.vim'
 "
 " by simo/ rename tab 
 Bundle 'gcmt/taboo.vim'
+Bundle 'groenewege/vim-less'
 
 Bundle 'Blackrush/vim-gocode'
 Bundle 'scrooloose/syntastic'
