@@ -65,13 +65,16 @@ Plugin 'gmarik/Vundle.vim'
 " Avoid a name conflict with L9
 "Plugin 'user/L9', {'name': 'newL9'}
 "
-Bundle "scrooloose/syntastic"
-Bundle 'Valloric/YouCompleteMe'
+" by simo/ rename tab 
+Bundle 'gcmt/taboo.vim'
+Bundle 'groenewege/vim-less'
+
+Bundle 'Blackrush/vim-gocode'
+Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
 Bundle 'kien/ctrlp.vim.git'
 map <C-n> :NERDTree<CR>
 Bundle 'bling/vim-airline'
-Bundle 'szw/vim-ctrlspace'
 " 使用Vundle来管理插件，这个必须要有。
 Bundle 'gmarik/vundle'
 Bundle 'a.vim'
@@ -87,7 +90,6 @@ Bundle 'vim-javacompleteex'
 Bundle 'Mark--Karkat'
 Bundle 'Shougo/neocomplcache.vim'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
 Bundle 'OmniCppComplete'
 Bundle 'Lokaltog/vim-powerline'
 Bundle 'repeat.vim'
@@ -95,7 +97,6 @@ Bundle 'msanders/snipmate.vim'
 Bundle 'wesleyche/SrcExpl'
 Bundle 'std_c.zip'
 Bundle 'tpope/vim-surround'
-Bundle 'scrooloose/syntastic'
 Bundle 'majutsushi/tagbar'
 Bundle 'taglist.vim'
 Bundle 'TxtBrowser'

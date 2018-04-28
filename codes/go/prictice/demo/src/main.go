@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	// "os"
+	"os"
 	// "strconv"
 	// local pkg
 	"demos"
@@ -34,5 +34,6 @@ func main() {
 	// demos.Chanint() // ExmpleTest Chanint()
 	// demos.Channel1() //
 	// demos.ChannelCache() // channel cache
-	demos.Stc1Demo()
+	// demos.Stc1Demo()
+	demos.ParsePsd(os.Args[1])
 }
