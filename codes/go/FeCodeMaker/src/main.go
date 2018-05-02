@@ -1,11 +1,13 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	//"os"
 	// "strconv"
 	// local pkg
 	//"demos"
+	"creator"
 )
 
 //////////////////////////////////////
@@ -32,6 +34,30 @@ func helpshow() {
  */
 func main() {
 	helpshow()
+
+	webport := flag.Int("webport", 2018, "Input the webserver port")
+	//webport := flag.Int("webport", 2018, "Input the webserver port")
+	flag.Parse()
+
+	fmt.Println("flags::", *webport)
+
+	c := &creator.FormCreator{
+		Conf: &creator.ConfForm{
+			ActionUrl: "test",
+			Buttons:   "",
+			Items: []*creator.FormItem{
+				&creator.FormItem{
+					Uitype: "text",
+					Model:  "name",
+					Rules:  "string",
+					Ui: map[string]string{
+						"a": "a",
+					},
+				},
+			},
+		},
+	}
+	c.Create()
 	// demos.MultiSpider()  // multi splider demo
 	// demos.Bom() // ExmpleTest Bom()
 	// demos.Chanint() // ExmpleTest Chanint()
