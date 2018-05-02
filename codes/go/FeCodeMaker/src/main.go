@@ -8,6 +8,7 @@ import (
 	// local pkg
 	//"demos"
 	"creator"
+	"webserver"
 )
 
 //////////////////////////////////////
@@ -35,7 +36,7 @@ func helpshow() {
 func main() {
 	helpshow()
 
-	webport := flag.Int("webport", 2018, "Input the webserver port")
+	webport := flag.String("webport", "2018", "Input the webserver port")
 	//webport := flag.Int("webport", 2018, "Input the webserver port")
 	flag.Parse()
 
@@ -58,11 +59,9 @@ func main() {
 		},
 	}
 	c.Create()
-	// demos.MultiSpider()  // multi splider demo
-	// demos.Bom() // ExmpleTest Bom()
-	// demos.Chanint() // ExmpleTest Chanint()
-	// demos.Channel1() //
-	// demos.ChannelCache() // channel cache
-	// demos.Stc1Demo()
-	//demos.ParsePsd(os.Args[1])
+
+	// start webserver
+	server := &webserver.Server{Port: *webport}
+	server.Init()
+	server.Start()
 }
