@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"os"
+	//"os"
 	// "strconv"
 	// local pkg
 	//"demos"
@@ -16,11 +16,13 @@ import (
 ////////////////////////////////////////
 func helpshow() {
 	fmt.Println("------------------------|")
-	fmt.Println("|    Syncsimo Server    |")
-	fmt.Println("|                       |")
-	fmt.Println("|  For server listener  |")
+	fmt.Println("|    FE code maker      |")
+	fmt.Println("|-----------------------|")
 	fmt.Println("|  Useage::             |")
-	fmt.Println("|    ssv server port    |")
+	fmt.Println("|    fcm run            |")
+	fmt.Println("|-----------------------|")
+	fmt.Println("|author: simo           |")
+	fmt.Println("|email : im@onrd.net    |")
 	fmt.Println("------------------------|")
 }
 
@@ -29,6 +31,7 @@ func helpshow() {
  * @return {[type]} [description]
  */
 func main() {
+	helpshow()
 	// demos.MultiSpider()  // multi splider demo
 	// demos.Bom() // ExmpleTest Bom()
 	// demos.Chanint() // ExmpleTest Chanint()

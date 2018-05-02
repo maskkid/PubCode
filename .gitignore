@@ -1,5 +1,11 @@
-codes\go\prictice\demo\src\github.com
-codes\go\prictice\demo\src\golang.org
-codes\go\prictice\demo\src\sourcegraph.com
-codes\go\prictice\demo\bin
-codes\go\prictice\demo\pkg
+src/bin
+.git
+.idea
+.swp
+.swo
+pkg
+
+src/github.com/
+src/golang.org/
+
+node_modules
