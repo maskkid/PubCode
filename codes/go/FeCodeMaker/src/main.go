@@ -36,7 +36,7 @@ func helpshow() {
 func main() {
 	helpshow()
 
-	webport := flag.String("webport", "2018", "Input the webserver port")
+	webport := flag.String("p", "2018", "Input the webserver port")
 	//webport := flag.Int("webport", 2018, "Input the webserver port")
 	flag.Parse()
 

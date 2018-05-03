@@ -39,6 +39,7 @@ type Server struct {
 
 func (s *Server) Init() {
 	s.Router = gin.Default()
+	s.Router.Delims("{[{", "}]}")
 	s.Router.Use(InitServerHeader())
 	s.Webroot = "./webroot/"
 	s.Router.Static("/statics", s.Webroot+"statics")
