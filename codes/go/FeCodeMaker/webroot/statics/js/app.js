@@ -11,8 +11,8 @@
             apiurl          : '/api',//'http://dd.huiyizhuce.com/thirdInterface/voteScoringapi',
             apiaction       : {
                     'user'  : '/user',
-                    'creator/commonform'  : '/creatorForm',
-                    'creator/commonlist'      : '/creatorList',
+                    'creator/commonform'  : '/creator/commonform',
+                    'creator/commonlist'      : '/creator/commonlist',
             }
         }, // app config end
 
@@ -267,10 +267,15 @@
                         subdata.suburl = this.formconf.suburl;
                         subdata.items = [];
                         $.each(this.formconf.items, function(index, itemconf) {
-                            subdata.items[index] = {};
+                            var d = {}
                             $.each(itemconf, function(i, v) {
-                                subdata.items[index][v.model] = v.value;
+                                //subdata.items[index][v.model] = v.value;
+                                d[v.model] = v.value;
                             })
+                            subdata.items.push(JSON.stringify(d));
+                        })
+                        MAPP.services.createCommonform(subdata, function(d){
+                            console.log('form callback::', d)
                         })
                         console.log('subdata::', subdata)
                     }
