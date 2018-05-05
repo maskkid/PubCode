@@ -9,21 +9,60 @@
 
 package creator
 
-import "fmt"
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"os"
+	"regexp"
+)
 
 // ======================= 结果输出
 // 输出标准
 type Outputor interface {
+	Replace(tag string, s string) (rst string)
 	Output(s string) (rst bool)
 }
 
 // 文件输出
 type FileOutputor struct {
+	tplpath string
+	outpath string
 }
 
-func (f *FileOutputor) Output(s string) bool {
-	fmt.Println(s)
+// 替换标记为对应的字符串
+func (self *FileOutputor) Replace(content string, tag string, s string) string {
+	r := regexp.MustCompile("<<<" + tag + ">>>")
+	rst := r.ReplaceAllString(content, s)
+	return string(rst)
+}
+
+func (self *FileOutputor) Output(s string) bool {
+	fo, err := os.Open(self.tplpath)
+	if err != nil {
+		fmt.Print("[simo]Error::", err.Error())
+		return false
+	}
+	fmt.Println(fo)
+
+	// 读取
+	tpl, err := ioutil.ReadFile(self.tplpath)
+	if err != nil {
+		fmt.Print("[simo]Error::", err.Error())
+		return false
+	}
+	tplstr := string(tpl)
+
+	// 正则替换原始内容中 对应的标签处内容 为 要输出的字符串
+	newstr := self.Replace(tplstr, "data", s)
+
+	// 写入
+	werr := ioutil.WriteFile(self.outpath+"/temp.ts", []byte(newstr), 0644)
+	if err != nil {
+		fmt.Println("[simo]FileOutput Errof::", werr)
+	}
+
+	fmt.Println("[simo]FileOutput::", newstr)
 	return true
 }
 
@@ -84,7 +123,10 @@ func (c *Creator) Create() string {
 
 // 输出数据
 func (c *Creator) Output(s string) bool {
-	var fp = &FileOutputor{}
+	var fp = &FileOutputor{
+		tplpath: "tplroot/react/commonform.tpl",
+		outpath: "./",
+	}
 	fp.Output(s)
 	return true //fp.Output(s) // 默认使用文件输出
 }

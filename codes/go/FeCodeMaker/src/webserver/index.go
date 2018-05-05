@@ -10,10 +10,11 @@ import (
 	"encoding/json"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
+	"github.com/tidwall/gjson"
 	"net/http"
 )
 
-const DEBUG = false
+const DEBUG = true
 
 var x = &creator.FormItem{}
 
@@ -87,6 +88,7 @@ func (s *Server) Init() {
 
 	fmt.Println("========>", s.Webroot, os.Args[0])
 
+	// @Controller
 	// route settings
 	// route index
 	s.Router.GET("/", func(c *gin.Context) {
@@ -100,9 +102,16 @@ func (s *Server) Init() {
 		}
 	})
 
+	// @Controller
 	// api route::create form 生成
 	s.Router.POST("/api/creator/commonform", func(c *gin.Context) {
 		suburl := c.PostForm("suburl")
+		jsonstr := c.PostForm("jsonstr") // 全部数据json
+
+		fmt.Println("[simo]jsonstr::", jsonstr)
+		testv := gjson.Parse(jsonstr).Get("suburl")
+		fmt.Println("?????????", testv)
+
 		// 对应的表单生成器配置结构体
 		confform := &creator.ConfForm{
 			ActionUrl: suburl,
@@ -145,6 +154,7 @@ func (s *Server) Init() {
 			Conf: confform,
 		}
 		fc.Create()
+		fc.Creator.Output(jsonstr) // 输出文件
 
 		/*
 			var formconf FormCreatorReq

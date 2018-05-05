@@ -171,7 +171,204 @@
                 }
             },
 
-            // User show
+            // 列表生成页面
+            creatorCommonlist : {
+                created : function() {
+                    this.addline()
+                },
+                cmoputed : { },
+                mounted : function(){},
+                data : function() {
+                    var data = {
+                        result : '',
+                        listconf : {
+                            'path'  : '',
+                            'compment' : '',
+                            'listurl': '',
+                            'searchconf' : {
+                                items : [],
+                                buttons : []
+                            },
+                            'colconf' : []
+                        },
+                        colitemconf : {
+                            issearch : false, // 是否是搜索字段, 决定searchconf配置项的显藏
+                            colitem : [
+                                {
+                                    label : '字段(model)',
+                                    model : 'model',
+                                    value : ''
+                                },
+                                {
+                                    label : '字段(label)',
+                                    model : 'label',
+                                    value : ''
+                                },
+                                {
+                                    label : '装饰组件',
+                                    model : 'compment',
+                                    value : ''
+                                }
+                            ],
+                            searchconf : [
+                                {
+                                    label : '显示类型(type)',
+                                    model : 'type',
+                                    value : 'text',
+                                    items : [
+                                            {
+                                                label : '单行文本',
+                                                value : 'text'
+                                            },
+                                            {
+                                                label : '多行文本',
+                                                value : 'textarea'
+                                            },
+                                            {
+                                                label : '隐藏文本',
+                                                value : 'hidden',
+                                            },
+                                            {
+                                                label : '密码',
+                                                value : 'password'
+                                            },
+                                            {
+                                                label : '下拉',
+                                                value : 'select'
+                                            },
+                                            {
+                                                label : '复选',
+                                                value : 'checkbox'
+                                            },
+                                            {
+                                                label : '单选',
+                                                value : 'radio'
+                                            },
+                                            {
+                                                label : '日期',
+                                                value : 'date'
+                                            },
+                                            {
+                                                label : '日期范围',
+                                                value : 'datepicker'
+                                            },
+                                            {
+                                                label : '省市联选',
+                                                value : 'city'
+                                            },
+                                            {
+                                                label : '组件',
+                                                value : 'compment'
+                                            }
+                                    ],
+                                },
+                                {
+                                    label : '组件名称',
+                                    model : 'compment',
+                                    value : '',
+                                    hide : true
+                                },
+                                {
+                                    label : '子选项，用于select、checkbox、radio',
+                                    model : 'items',
+                                    value : [], // 可以是字符串，定义一个接口地址，自动获取数据源；可以是匿名函数；可以是固定的字典数据
+                                    hide : true
+                                },
+                                {
+                                    label : '默认值',
+                                    model : 'value',
+                                    value : ''
+                                },
+                                {
+                                    label : '验证规则, 支持正则、标记字符、自定义函数字符串',
+                                    model : 'rules',
+                                    value : ''
+                                }
+                            ], // 单列 searchconf END
+                        }
+                    }
+                    return data;
+                },
+                methods : {
+                    setsearch : function(val, rowindex, colindex) {
+                        this.listconf.colconf[rowindex][colindex]['issearch'] = !this.listconf.colconf[rowindex][colindex]['issearch'];
+                    },
+                    addline : function() {
+                        var conf = $.extend(true, {}, this.colitemconf);
+                        this.listconf.colconf.push(conf);
+                    },
+                    delline : function(index) {
+                        this.listconf.colconf.splice(index, 1)
+                    },
+                    // 子数据源
+                    createSubData : function(val, rowindex, colindex) {
+                        val = val || "";
+                        val = val.split(/\n/);
+                        var row = this.listconf.colconf[rowindex];
+                        if(!val || !val.length) {return;}
+                        var t = this;
+                        row.searchconf[colindex].value = []
+                        $.each(val, function(i, v){
+                            v = v.split(' ');
+                            if(v.length<2) {return true}
+                            row.searchconf[colindex].value.push({
+                                label : v[0],
+                                value : v[1]
+                            })
+                        })
+                    },
+                    // 类型改变
+                    typechange : function(val, rowindex, colindex) {
+                        var row = this.listconf.colconf[rowindex];
+                        console.log('???', rowindex, colindex, row.searchconf)
+                        //console.log(rowindex, colindex, val, row.searchconf.items[colindex*1+1]);
+                        // 配置type=compment时，可输入组件名称
+                        if(row.searchconf[colindex*1+1]) {
+                            // 默认使用类型字段的下一个字段当做组件输入框
+                            row.searchconf[colindex*1+1].hide = val=='compment'? false : true;
+                        }
+
+                        // 
+                        if(row.searchconf[colindex*1+2]) {
+                            row.searchconf[colindex*1+2].hide = 'radio,checkbox,select'.indexOf(val)>-1? false : true;
+                        }
+                    },
+                    submit : function() {
+                        var rst = {}
+                        rst.listurl = this.listconf.listurl;
+                        rst.path = this.listconf.path;
+                        rst.compment = this.listconf.compment;
+                        rst.searchconf = {
+                            items : [],
+                            buttons : []
+                        }
+                        rst.colconf =[]; 
+                        console.log(this.listconf.colconf)
+                        $.each(this.listconf.colconf, function(i, item) {
+                            var colitem = {}
+                            $.each(item.colitem, function(k, col){
+                                console.log(k, col)
+                                colitem[col.model] = col.value;
+                            })
+                            rst.colconf.push(colitem);
+
+                            // 整理搜索表单
+                            if(!item.issearch) {return true}
+                            $.each(item.searchconf, function(index, itemconf) {
+                                $.each(itemconf, function(i, v) {
+                                    if(v.hide) {return true} // 隐藏数据项(组件名称、子数据列表)，不组装
+                                    //subdata.items[index][v.model] = v.value;
+                                    colitem[v.model] = v.value;
+                                })
+                            });
+                            rst.searchconf.items.push(colitem);
+                        });
+                        console.log("----", rst)
+                    }
+                }
+            },
+
+            // 表单生成页面
             creatorCommonform : {
                 created : function() {
                     // 默认有一行
@@ -183,11 +380,18 @@
                 },
                 data : function() {
                     var data = {
+                        result : '',
                         formconf : {
+                            'path' : '', // 当前页面路由
+                            'compment' : '', // 当前页面组件名称
                             'suburl' : '',
                             'type' : '',
-                            'buttons' : [],
+                            'buttons' : [], // 操作按钮
                             'items' : [],
+                        },
+                        subitemconf : {
+                            label : '',
+
                         },
                         lineconf : [
                             {
@@ -206,7 +410,7 @@
                                 value : 'text',
                                 items : [
                                         {
-                                            label : '---- 单行文本 ----',
+                                            label : '单行文本',
                                             value : 'text'
                                         },
                                         {
@@ -234,10 +438,34 @@
                                             value : 'radio'
                                         },
                                         {
-                                            label : '自定义',
-                                            value : 'comptent'
+                                            label : '日期',
+                                            value : 'date'
                                         },
+                                        {
+                                            label : '日期范围',
+                                            value : 'datepicker'
+                                        },
+                                        {
+                                            label : '省市联选',
+                                            value : 'city'
+                                        },
+                                        {
+                                            label : '组件',
+                                            value : 'compment'
+                                        }
                                 ],
+                            },
+                            {
+                                label : '组件名称',
+                                model : 'compment',
+                                value : '',
+                                hide : true
+                            },
+                            {
+                                label : '子选项，用于select、checkbox、radio',
+                                model : 'items',
+                                value : [], // 可以是字符串，定义一个接口地址，自动获取数据源；可以是匿名函数；可以是固定的字典数据
+                                hide : true
                             },
                             {
                                 label : '默认值',
@@ -245,7 +473,7 @@
                                 value : ''
                             },
                             {
-                                label : '验证规则',
+                                label : '验证规则, 支持正则、标记字符、自定义函数字符串',
                                 model : 'rules',
                                 value : ''
                             }
@@ -254,6 +482,35 @@
                     return data;
                 },
                 methods : {
+                    // 子数据源
+                    createSubData : function(val, rowindex, colindex) {
+                        val = val.split(/\n/);
+                        if(!val || !val.length) {return;}
+                        var t = this;
+                        t.formconf.items[rowindex][colindex].value = []
+                        $.each(val, function(i, v){
+                            v = v.split(' ');
+                            if(v.length<2) {return true}
+                            t.formconf.items[rowindex][colindex].value.push({
+                                label : v[0],
+                                value : v[1]
+                            })
+                        })
+                    },
+                    // 类型改变
+                    typechange : function(val, rowindex, colindex) {
+                        console.log(rowindex, colindex, val, this.formconf.items[rowindex][colindex*1+1]);
+                        // 配置type=compment时，可输入组件名称
+                        if(this.formconf.items[rowindex][colindex*1+1]) {
+                            // 默认使用类型字段的下一个字段当做组件输入框
+                            this.formconf.items[rowindex][colindex*1+1].hide = val=='compment'? false : true;
+                        }
+
+                        // 
+                        if(this.formconf.items[rowindex][colindex*1+2]) {
+                            this.formconf.items[rowindex][colindex*1+2].hide = 'radio,checkbox,select'.indexOf(val)>-1? false : true;
+                        }
+                    },
                     addline : function() {
                         var conf = $.extend(true, {}, this.lineconf);
                         this.formconf.items.push(conf);
@@ -263,21 +520,33 @@
                     },
                     submit : function() {
                         console.log(this.formconf)
-                        var subdata = {};
-                        subdata.suburl = this.formconf.suburl;
-                        subdata.items = [];
+                        var subdata = {},
+                            webdata = {};
+                        webdata.suburl = subdata.suburl = this.formconf.suburl;
+                        webdata.path = subdata.path = this.formconf.path;
+                        webdata.compment = subdata.compment = this.formconf.compment;
+                        webdata.items = [];
+                       subdata.items = [];
                         $.each(this.formconf.items, function(index, itemconf) {
                             var d = {}
                             $.each(itemconf, function(i, v) {
+                                if(v.hide) {return true} // 隐藏数据项(组件名称、子数据列表)，不组装
                                 //subdata.items[index][v.model] = v.value;
                                 d[v.model] = v.value;
                             })
+                            webdata.items.push(d);
                             subdata.items.push(JSON.stringify(d));
                         })
+
+                        this.result = JSON.stringify(webdata, null, 2);
+
+                        // 直接传递json字符串
+                        subdata.jsonstr = this.result;
                         MAPP.services.createCommonform(subdata, function(d){
                             console.log('form callback::', d)
-                        })
-                        console.log('subdata::', subdata)
+                        });
+                        console.log('subdata::', subdata, webdata)
+                        //this.result = this.result.replace(/\\/g, "");
                     }
                 }
             },
@@ -349,11 +618,19 @@
             return this._render;
         },
 
+        // ued 体验优化
+        beauty : function() {
+            $(document).on('mouseover', 'input,select', function(){
+                $(this).focus();
+            })
+        },
+
         init : function() {
             $('head title').text(this.config.appname)
             this.createRoutes();
             this.createComponents();
             this.createRouter();
+            this.beauty();
             return this;
         },
         run : function() {

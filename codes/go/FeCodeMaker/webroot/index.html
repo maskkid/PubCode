@@ -12,7 +12,7 @@
     <div class="page-container">
         <div class="pure-g">
             <div class="pure-u-1-24"></div>
-            <div class="pure-u-2-24">
+            <div class="pure-u-22-24">
                 <tplheader></tplheader>
                 <transition name="slide-fade" mode="out-in">
                     <router-view></router-view>
@@ -46,7 +46,99 @@ index
 
 <!-- 列表创建器 -->
 <script type="text/x-template" id="tpl-page-creatorCommonlist"><div>
-<h1>list</h1>
+<form class="pure-form pure-form-stacked">
+    <fieldset>
+        <legend>通用列表创建器</legend>
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <label for="suburl"></label>
+                <input id="suburl" type="text" v-model="listconf.path" placeholder="路由路径"  class="pure-u-23-24">
+            </div>
+
+            <div class="pure-u-1">
+                <label for="suburl"></label>
+                <input id="suburl" type="text" v-model="listconf.compment" placeholder="组件名称" class="pure-u-23-24">
+            </div>
+
+            <div class="pure-u-1">
+                <label for="suburl"></label>
+                <input id="suburl" type="text" v-model="listconf.listurl" placeholder="接口地址"  class="pure-u-23-24">
+            </div>
+
+            <table class="pure-table pure-table-horizontal pure-u-22-24">
+                <thead>
+                    <tr><th :colspan="listconf.colconf.length">单列项</th></tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(colitem, index) in listconf.colconf">
+                        <td><span class="pure-button">{{index+1}}</span></td>
+                        <td v-for="(col, colindex) in colitem.colitem">
+                            <label>
+                                <input v-if="col.hide!=true" type="text" v-model="col.value" :placeholder="col.label"/> 
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                搜索项
+                                <input type="checkbox" v-model="colitem.issearch" />
+                            </label>
+                        </td>
+                        <td v-if="colitem.issearch" v-for="(col, colindex) in colitem.searchconf">
+                        <!--
+                            <label>
+                                <input v-if="col.hide!=true" type="text" v-model="col.value" :placeholder="col.label"/> 
+                            </label>
+                            -->
+                            <label v-if="col.model=='items'">
+                                <textarea v-if="col.hide!=true" v-model="col._value" @blur="createSubData(col._value, index, colindex)" placeholder="每行一个，格式 label [空格] value。例如：男 1"> </textarea>
+                            </label>
+                            <label v-else-if="col.model!='type'">
+                                <input v-if="col.hide!=true" type="text" v-model="col.value" :placeholder="col.label"/> 
+                            </label>
+                            <label v-else>
+                                <select v-model="col.value" :placeholder="col.label" @change="typechange(col.value, index, colindex)">
+                                    <option v-for="option in col.items" :value="option.value">{{option.label}}</option>
+                                </select>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+<!--
+            <table class="pure-table pure-table-horizontal pure-u-22-24">
+                <thead>
+                    <tr><th :colspan="listconf.items.length">单列项</th></tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(formitem, index) in listconf.items">
+                        <td><span class="pure-button">{{index+1}}</span></td>
+                        <td v-for="(col,colindex) in formitem">
+                            <label v-if="col.model=='items'">
+                                <textarea v-if="col.hide!=true" v-model="col._value" @blur="createSubData(col._value, index, colindex)" placeholder="每行一个，格式 label [空格] value。例如：男 1"> </textarea>
+                            </label>
+                            <label v-else-if="col.model!='type'">
+                                <input v-if="col.hide!=true" type="text" v-model="col.value" :placeholder="col.label"/> 
+                            </label>
+                            <label v-else>
+                                <select v-model="col.value" :placeholder="col.label" @change="typechange(col.value, index, colindex)">
+                                    <option v-for="option in col.items" :value="option.value">{{option.label}}</option>
+                                </select>
+                            </label>
+                        </td>
+                        <td style="width:180px">
+                            <a class="pure-button pure-button-primary" @click="addline">+</a>
+                            <a v-if="index!=0" class="pure-button pure-button-danger" @click="delline(index)">-</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+-->
+            <button class="pure-button pure-button-primary" @click="submit"> 生 成 </button>
+        </div>
+    </fieldset>
+</form>
 </div></script> <!--// 列表创建器 -->
 
 <!-- 表单创建器 -->
@@ -54,32 +146,55 @@ index
 <form class="pure-form pure-form-stacked">
     <fieldset>
         <legend>表单创建器</legend>
-        <label for="suburl">提交地址</label>
-            <input id="suburl" type="text" v-model="formconf.suburl" >
+        <div class="pure-g">
+            <div class="pure-u-1">
+                <label for="suburl"></label>
+                <input id="suburl" type="text" v-model="formconf.path" placeholder="路由路径"  class="pure-u-23-24">
+            </div>
 
-        <table class="pure-table pure-table-horizontal">
-            <tbody>
-                <tr v-for="(formitem, index) in formconf.items">
-                    <td v-for="col in formitem">
-                        <label v-if="col.model!='type'">{{col.label}} <input type="text" v-model="col.value" /> </label>
-                        <label v-else> {{col.label}}
-                            <select v-model="col.value">
-                                <option v-for="option in col.items" :value="option.value">{{option.label}}</option>
-                            </select>
-                        </label>
-                    </td>
-                    <td>
-                        <button class="pure-button pure-button-primary" @click="addline">+</button>
-                        <button v-if="index!=0" class="pure-button pure-button-danger" @click="delline(index)">-</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <div class="pure-u-1">
+                <label for="suburl"></label>
+                <input id="suburl" type="text" v-model="formconf.compment" placeholder="组件名称" class="pure-u-23-24">
+            </div>
 
+            <div class="pure-u-1">
+                <label for="suburl"></label>
+                <input id="suburl" type="text" v-model="formconf.suburl" placeholder="表单提交地址"  class="pure-u-23-24">
+            </div>
 
-        <button class="pure-button pure-button-primary" @click="submit">生成</button>
+            <table class="pure-table pure-table-horizontal pure-u-22-24">
+                <thead>
+                    <tr><th :colspan="formconf.items.length">表单项</th></tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(formitem, index) in formconf.items">
+                        <td><span class="pure-button">{{index+1}}</span></td>
+                        <td v-for="(col,colindex) in formitem">
+                            <label v-if="col.model=='items'">
+                                <textarea v-if="col.hide!=true" v-model="col._value" @blur="createSubData(col._value, index, colindex)" placeholder="每行一个，格式 label [空格] value。例如：男 1"> </textarea>
+                            </label>
+                            <label v-else-if="col.model!='type'">
+                                <input v-if="col.hide!=true" type="text" v-model="col.value" :placeholder="col.label"/> 
+                            </label>
+                            <label v-else>
+                                <select v-model="col.value" :placeholder="col.label" @change="typechange(col.value, index, colindex)">
+                                    <option v-for="option in col.items" :value="option.value">{{option.label}}</option>
+                                </select>
+                            </label>
+                        </td>
+                        <td style="width:180px">
+                            <a class="pure-button pure-button-primary" @click="addline">+</a>
+                            <a v-if="index!=0" class="pure-button pure-button-danger" @click="delline(index)">-</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <button class="pure-button pure-button-primary" @click="submit"> 生 成 </button>
+        </div>
     </fieldset>
 </form>
+<textarea v-model="result" style="border:1px solid #ddd; background:#f0f0f0; min-height:500px; overflow:auto; padding:3px; box-sizing:border-box; color:#aaa; font-size:12px; font-family:verdana,tahoma,arial; line-height:1.2" class="pure-u-23-24" placeholder="代码结果"></textarea>
 </div></script> <!--// 表单创建器 -->
 
 <script type="text/x-template"></script>
