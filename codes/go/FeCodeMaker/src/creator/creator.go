@@ -37,7 +37,7 @@ func (self *FileOutputor) Replace(content string, tag string, s string) string {
 	return string(rst)
 }
 
-func (self *FileOutputor) Output(s string) bool {
+func (self *FileOutputor) Output(s string, filename string) bool {
 	fo, err := os.Open(self.tplpath)
 	if err != nil {
 		fmt.Print("[simo]Error::", err.Error())
@@ -57,12 +57,12 @@ func (self *FileOutputor) Output(s string) bool {
 	newstr := self.Replace(tplstr, "data", s)
 
 	// 写入
-	werr := ioutil.WriteFile(self.outpath+"/temp.ts", []byte(newstr), 0644)
+	werr := ioutil.WriteFile(self.outpath+"/"+filename, []byte(newstr), 0644)
 	if err != nil {
 		fmt.Println("[simo]FileOutput Errof::", werr)
 	}
 
-	fmt.Println("[simo]FileOutput::", newstr)
+	//fmt.Println("[simo]FileOutput::", newstr)
 	return true
 }
 
@@ -122,12 +122,12 @@ func (c *Creator) Create() string {
 }
 
 // 输出数据
-func (c *Creator) Output(s string) bool {
+func (c *Creator) Output(s string, filename string) bool {
 	var fp = &FileOutputor{
 		tplpath: "tplroot/react/commonform.tpl",
 		outpath: "./",
 	}
-	fp.Output(s)
+	fp.Output(s, filename)
 	return true //fp.Output(s) // 默认使用文件输出
 }
 

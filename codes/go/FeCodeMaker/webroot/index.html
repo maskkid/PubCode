@@ -101,31 +101,6 @@ index
                                 </select>
                             </label>
                         </td>
-                    </tr>
-                </tbody>
-            </table>
-
-<!--
-            <table class="pure-table pure-table-horizontal pure-u-22-24">
-                <thead>
-                    <tr><th :colspan="listconf.items.length">单列项</th></tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(formitem, index) in listconf.items">
-                        <td><span class="pure-button">{{index+1}}</span></td>
-                        <td v-for="(col,colindex) in formitem">
-                            <label v-if="col.model=='items'">
-                                <textarea v-if="col.hide!=true" v-model="col._value" @blur="createSubData(col._value, index, colindex)" placeholder="每行一个，格式 label [空格] value。例如：男 1"> </textarea>
-                            </label>
-                            <label v-else-if="col.model!='type'">
-                                <input v-if="col.hide!=true" type="text" v-model="col.value" :placeholder="col.label"/> 
-                            </label>
-                            <label v-else>
-                                <select v-model="col.value" :placeholder="col.label" @change="typechange(col.value, index, colindex)">
-                                    <option v-for="option in col.items" :value="option.value">{{option.label}}</option>
-                                </select>
-                            </label>
-                        </td>
                         <td style="width:180px">
                             <a class="pure-button pure-button-primary" @click="addline">+</a>
                             <a v-if="index!=0" class="pure-button pure-button-danger" @click="delline(index)">-</a>
@@ -134,11 +109,11 @@ index
                 </tbody>
             </table>
 
--->
-            <button class="pure-button pure-button-primary" @click="submit"> 生 成 </button>
+            <a class="pure-button pure-button-primary" @click="submit">生成</a>
         </div>
     </fieldset>
 </form>
+<textarea v-model="result" style="border:1px solid #ddd; background:#f0f0f0; min-height:500px; overflow:auto; padding:3px; box-sizing:border-box; color:#aaa; font-size:12px; font-family:verdana,tahoma,arial; line-height:1.2" class="pure-u-23-24" placeholder="代码结果"></textarea>
 </div></script> <!--// 列表创建器 -->
 
 <!-- 表单创建器 -->
@@ -190,7 +165,7 @@ index
                 </tbody>
             </table>
 
-            <button class="pure-button pure-button-primary" @click="submit"> 生 成 </button>
+            <a class="pure-button pure-button-primary" @click="submit"> 生 成 </a>
         </div>
     </fieldset>
 </form>

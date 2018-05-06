@@ -109,8 +109,11 @@ func (s *Server) Init() {
 		jsonstr := c.PostForm("jsonstr") // 全部数据json
 
 		fmt.Println("[simo]jsonstr::", jsonstr)
-		testv := gjson.Parse(jsonstr).Get("suburl")
-		fmt.Println("?????????", testv)
+		compmentname := gjson.Parse(jsonstr).Get("compment").String()
+		fmt.Println("?????????", compmentname)
+		if compmentname == "" {
+			compmentname = "unamed"
+		}
 
 		// 对应的表单生成器配置结构体
 		confform := &creator.ConfForm{
@@ -154,7 +157,7 @@ func (s *Server) Init() {
 			Conf: confform,
 		}
 		fc.Create()
-		fc.Creator.Output(jsonstr) // 输出文件
+		fc.Creator.Output(jsonstr, compmentname+".ts") // 输出文件
 
 		/*
 			var formconf FormCreatorReq
