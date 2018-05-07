@@ -37,11 +37,11 @@ func (self *FileOutputor) Replace(content string, tag string, s string) string {
 	return string(rst)
 }
 
-func (self *FileOutputor) Output(s string, filename string) bool {
+func (self *FileOutputor) Output(s string, filename string) string {
 	fo, err := os.Open(self.tplpath)
 	if err != nil {
 		fmt.Print("[simo]Error::", err.Error())
-		return false
+		return ""
 	}
 	fmt.Println(fo)
 
@@ -49,7 +49,7 @@ func (self *FileOutputor) Output(s string, filename string) bool {
 	tpl, err := ioutil.ReadFile(self.tplpath)
 	if err != nil {
 		fmt.Print("[simo]Error::", err.Error())
-		return false
+		return ""
 	}
 	tplstr := string(tpl)
 
@@ -63,7 +63,7 @@ func (self *FileOutputor) Output(s string, filename string) bool {
 	}
 
 	//fmt.Println("[simo]FileOutput::", newstr)
-	return true
+	return newstr
 }
 
 // 数据库输出
@@ -122,13 +122,12 @@ func (c *Creator) Create() string {
 }
 
 // 输出数据
-func (c *Creator) Output(s string, filename string) bool {
+func (c *Creator) Output(s string, filename string, conf map[string]string) string {
 	var fp = &FileOutputor{
-		tplpath: "tplroot/react/commonform.tpl",
-		outpath: "./",
+		tplpath: conf["tplpath"], //"tplroot/react/commonform.tpl",
+		outpath: conf["outpath"], //"./",
 	}
-	fp.Output(s, filename)
-	return true //fp.Output(s) // 默认使用文件输出
+	return fp.Output(s, filename) //fp.Output(s) // 默认使用文件输出
 }
 
 // 表单创建器
@@ -138,24 +137,39 @@ type FormCreator struct {
 }
 
 // 生成form字符串
-func (fc *FormCreator) Create() string {
-	fc.Creator.Create()
-	x, _ := json.Marshal(fc.Conf)
+func (this *FormCreator) Create() string {
+	this.Creator.Create()
+	x, _ := json.Marshal(this.Conf)
 	fmt.Println("conf::", string(x))
-	fc.rststr = string(x)
+	this.rststr = string(x)
 	return string(x)
 }
 
+func (this *FormCreator) Output(s string, filename string) string {
+	return this.Creator.Output(s, filename, map[string]string{
+		"tplpath": "tplroot/react/commonform.tpl",
+		"outpath": "./",
+	})
+}
+
+// 列表创建器
 type ListCreator struct {
 	Creator
 	Conf *ConfList
 }
 
 // 生成列表字符串
-func (lc *ListCreator) Create() string {
-	lc.Creator.Create()
-	x, _ := json.Marshal(lc.Conf)
+func (this *ListCreator) Create() string {
+	this.Creator.Create()
+	x, _ := json.Marshal(this.Conf)
 	fmt.Println("list conf::", string(x))
-	lc.rststr = string(x)
-	return lc.rststr
+	this.rststr = string(x)
+	return this.rststr
+}
+
+func (this *ListCreator) Output(s string, filename string) string {
+	return this.Creator.Output(s, filename, map[string]string{
+		"tplpath": "tplroot/react/commonlist.tpl",
+		"outpath": "./",
+	})
 }

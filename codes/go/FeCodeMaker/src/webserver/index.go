@@ -14,7 +14,7 @@ import (
 	"net/http"
 )
 
-const DEBUG = true
+const DEBUG = false
 
 var x = &creator.FormItem{}
 
@@ -112,7 +112,7 @@ func (s *Server) Init() {
 		compmentname := gjson.Parse(jsonstr).Get("compment").String()
 		fmt.Println("?????????", compmentname)
 		if compmentname == "" {
-			compmentname = "unamed"
+			compmentname = "unamed.list"
 		}
 
 		// 对应的表单生成器配置结构体
@@ -157,7 +157,7 @@ func (s *Server) Init() {
 			Conf: confform,
 		}
 		fc.Create()
-		fc.Creator.Output(jsonstr, compmentname+".ts") // 输出文件
+		rst := fc.Output(jsonstr, compmentname+".ts") // 输出文件
 
 		/*
 			var formconf FormCreatorReq
@@ -170,7 +170,30 @@ func (s *Server) Init() {
 		c.JSON(0, gin.H{
 			"status":  0,
 			"message": "",
-			"data":    []string{},
+			"data":    rst,
+		})
+	}) // Controller Common form END
+
+	// @Controller
+	// api route::create list 生成
+	s.Router.POST("/api/creator/commonlist", func(c *gin.Context) {
+		jsonstr := c.PostForm("jsonstr") // 全部数据json
+
+		compmentname := gjson.Parse(jsonstr).Get("compment").String()
+		fmt.Println("?????????", compmentname)
+		if compmentname == "" {
+			compmentname = "unamed.list"
+		}
+
+		// 执行生成器生成逻辑
+		lc := &creator.ListCreator{}
+		lc.Create()
+		rst := lc.Output(jsonstr, compmentname+".ts") // 输出文件
+
+		c.JSON(0, gin.H{
+			"status":  0,
+			"message": "",
+			"data":    rst,
 		})
 	})
 }

@@ -68,7 +68,7 @@
                 MAPP.helper.postData(MAPP.config.apiaction['creator/commonform'], data, cb);
             },
             createCommonlist : function(data, cb) {
-                MAPP.helper.getData(MAPP.config.apiaction['creator/commonlist'], data, cb);
+                MAPP.helper.postData(MAPP.config.apiaction['creator/commonlist'], data, cb);
             },
 
             decorator : {
@@ -345,25 +345,35 @@
                         rst.colconf =[]; 
                         console.log(this.listconf.colconf)
                         $.each(this.listconf.colconf, function(i, item) {
+                            if(item.hide) {return true} // 隐藏数据项(组件名称、子数据列表)，不组装
+
                             var colitem = {}
                             $.each(item.colitem, function(k, col){
-                                console.log(k, col)
                                 colitem[col.model] = col.value;
                             })
                             rst.colconf.push(colitem);
 
                             // 整理搜索表单
                             if(!item.issearch) {return true}
-                            $.each(item.searchconf, function(index, itemconf) {
-                                $.each(itemconf, function(i, v) {
-                                    if(v.hide) {return true} // 隐藏数据项(组件名称、子数据列表)，不组装
-                                    //subdata.items[index][v.model] = v.value;
-                                    colitem[v.model] = v.value;
-                                })
+                            // 去掉同名的compment 项
+                            delete colitem['compment'];
+                            console.log('item searchconf::', item.searchconf)
+                            $.each(item.searchconf, function(index, sconf) {
+                                if(sconf.hide) {return true} // 隐藏数据项(组件名称、子数据列表)，不组装
+                                colitem[sconf.model] = sconf.value;
                             });
                             rst.searchconf.items.push(colitem);
                         });
                         console.log("----", rst)
+                        // 直接传递json字符串
+                        var t = this;
+                        this.result = JSON.stringify(rst, null, 2);
+                        rst.jsonstr = this.result;
+                        MAPP.services.createCommonlist(rst, function(d){
+                            //console.log('form callback::', d)
+                            t.result = d.data;
+                            console.log("xxxx", t.result);
+                        })
                     }
                 }
             },
@@ -526,7 +536,7 @@
                         webdata.path = subdata.path = this.formconf.path;
                         webdata.compment = subdata.compment = this.formconf.compment;
                         webdata.items = [];
-                       subdata.items = [];
+                        subdata.items = [];
                         $.each(this.formconf.items, function(index, itemconf) {
                             var d = {}
                             $.each(itemconf, function(i, v) {
@@ -541,9 +551,12 @@
                         this.result = JSON.stringify(webdata, null, 2);
 
                         // 直接传递json字符串
+                        var t = this;
                         subdata.jsonstr = this.result;
                         MAPP.services.createCommonform(subdata, function(d){
-                            console.log('form callback::', d)
+                            //console.log('form callback::', d)
+                            t.result = d.data;
+                            console.log("xxxx", t.result);
                         });
                         console.log('subdata::', subdata, webdata)
                         //this.result = this.result.replace(/\\/g, "");
