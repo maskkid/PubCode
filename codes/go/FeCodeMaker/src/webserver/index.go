@@ -14,7 +14,7 @@ import (
 	"net/http"
 )
 
-const DEBUG = false
+const DEBUG = true
 
 var x = &creator.FormItem{}
 
@@ -195,6 +195,27 @@ func (s *Server) Init() {
 			"message": "",
 			"data":    rst,
 		})
+	})
+
+	// @Controller
+	// auto complte api config
+	// api 's' api
+	s.Router.GET("/apiapi", func(c *gin.Context) {
+		if DEBUG == true {
+			c.JSON(0, gin.H{
+				"status":  0,
+				"message": "debug",
+				"data":    "",
+			})
+		} else {
+			// http request api info
+			// data := http.get ...
+			c.JSON(0, gin.H{
+				"status":  0,
+				"message": "",
+				"data":    "",
+			})
+		}
 	})
 }
 

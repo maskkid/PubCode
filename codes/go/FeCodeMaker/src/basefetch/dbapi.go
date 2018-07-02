@@ -1,0 +1,5 @@
+package basefetch
+
+func main() {
+
+}

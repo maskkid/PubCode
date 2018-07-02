@@ -3,6 +3,7 @@ src/bin
 .idea
 .swp
 .swo
+.sw*
 pkg
 
 src/github.com/

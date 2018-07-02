@@ -16,6 +16,6 @@ func Line(s string) {
 func CheckError(err error) {
 	if err != nil {
 		fmt.Println("utils::CheckError=> ", err)
-		os.Exit(1)
+		panic(err)
 	}
 }

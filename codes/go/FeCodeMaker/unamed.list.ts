@@ -1,21 +1,12 @@
-列表模板测试:
+aaa
+bbb
+ccc
+dddd
 {
-  "listurl": "",
+  "suburl": "",
   "path": "",
   "compment": "",
-  "searchconf": {
-    "items": [
-      {
-        "model": "",
-        "label": "",
-        "type": "text",
-        "value": "",
-        "rules": ""
-      }
-    ],
-    "buttons": []
-  },
-  "colconf": [
+  "items": [
     {
       "model": "",
       "label": "",
@@ -26,15 +17,32 @@
     {
       "model": "",
       "label": "",
-      "compment": ""
+      "type": "text",
+      "value": "",
+      "rules": ""
     },
     {
       "model": "",
       "label": "",
-      "compment": ""
+      "type": "text",
+      "value": "",
+      "rules": ""
+    },
+    {
+      "model": "",
+      "label": "",
+      "type": "text",
+      "value": "",
+      "rules": ""
+    },
+    {
+      "model": "",
+      "label": "",
+      "type": "text",
+      "value": "",
+      "rules": ""
     }
   ]
 }
-
-哈哈哈哈
-测试
+eee
+ff

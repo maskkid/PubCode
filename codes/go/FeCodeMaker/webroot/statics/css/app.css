@@ -1,1 +1,24 @@
 * {margin:0; padding:0; font-size:14px;}
+
+.header {
+    margin-bottom: 0 0 30px;
+}
+.header .pure-menu {
+    margin:0 0 10px;
+    border-bottom:1px solid #ddd;
+}
+.header .pure-menu li {
+    font-size:16px;
+}
+.header .pure-menu li a {
+    padding: 1em 1em;
+    color:#a00;
+}
+
+.pure-form legend {
+    font-size:18px;
+    display:inline-block;
+    background:#f0f0f0;
+    text-indent:1em;
+    color:#888;
+}
