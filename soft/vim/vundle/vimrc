@@ -71,7 +71,7 @@ Bundle 'groenewege/vim-less'
 
 Bundle 'Blackrush/vim-gocode'
 Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
+Bundle 'preservim/nerdtree'
 Bundle 'kien/ctrlp.vim.git'
 map <C-n> :NERDTree<CR>
 Bundle 'bling/vim-airline'
