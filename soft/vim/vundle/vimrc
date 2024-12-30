@@ -21,7 +21,8 @@ set expandtab               "以下三个配置配合使用，设置tab和缩进
 set shiftwidth=4
 set tabstop=4
 "set cursorline              "为光标所在行加下划线
-set number                  "显示行号
+"set number                  "显示行号
+set relativenumber          " 相对行号
 set autoread                "文件在Vim之外修改过，自动重新读入
 
 set ignorecase              "检索时忽略大小写
@@ -70,7 +71,6 @@ Bundle 'gcmt/taboo.vim'
 Bundle 'groenewege/vim-less'
 
 Bundle 'Blackrush/vim-gocode'
-Bundle 'Blackrush/vim-gocode'
 Plugin 'fatih/vim-go'
 Plugin 'nsf/gocode'
 Plugin 'tpope/vim-fugitive'
@@ -79,6 +79,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'preservim/nerdtree'
 Bundle 'kien/ctrlp.vim.git'
 map <C-n> :NERDTree<CR>
+let NERDTreeShowLineNumbers=1
 Bundle 'bling/vim-airline'
 " 使用Vundle来管理插件，这个必须要有。
 Bundle 'gmarik/vundle'
